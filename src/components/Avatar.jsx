@@ -1,11 +1,11 @@
-import styles from './Avatar.module.css'
+import styles from "./Avatar.module.css";
 
-export function Avatar() {
-    return(
-        <img
-          className={styles.avatar}
-          src="https://github.com/mendesrl.png"
-          alt="Profile image"
-        />
-    )
+export function Avatar({ hasBorder = true, src }) {
+  return (
+    <img
+      className={hasBorder ? styles.avatarWithBorder : styles.avatar}
+      src={src}
+      alt="Profile image"
+    />
+  );
 }
