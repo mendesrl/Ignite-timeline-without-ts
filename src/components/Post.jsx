@@ -6,11 +6,11 @@ import ptBR from "date-fns/locale/pt-BR";
 import { useState } from "react";
 
 export function Post({ author, publishedAt, content }) {
-
   const [comments, setComments] = useState([
-    1,
-    2
-  ])
+    "Muito bom o post, parabéns!! 👏👏",
+  ]);
+
+  const [newCommentText, setNewCommentText] = useState("");
 
   const publishedAtFormatted = new Intl.DateTimeFormat("pt-BR", {
     day: "2-digit",
@@ -24,10 +24,15 @@ export function Post({ author, publishedAt, content }) {
     addSuffix: true,
   });
 
+  function handleNewCommentChange() {
+    setNewCommentText(event.target.value);
+  }
+
   function handleCreateNewComment() {
     event.preventDefault();
 
-    setComments([...comments, comments.length + 1]);
+    setComments([...comments, newCommentText]);
+    setNewCommentText("")
   }
   return (
     <article className={styles.post}>
@@ -62,7 +67,12 @@ export function Post({ author, publishedAt, content }) {
       <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
 
-        <textarea placeholder="Deixe um comentario" />
+        <textarea
+          name="commemt"
+          placeholder="Deixe um comentario"
+          value={newCommentText}
+          onChange={handleNewCommentChange}
+        />
 
         <footer>
           <button type="submit">Publicar</button>
@@ -70,8 +80,8 @@ export function Post({ author, publishedAt, content }) {
       </form>
 
       <div className={styles.commentList}>
-        {comments.map(comment => {
-          return <Comment />
+        {comments.map((comment) => {
+          return <Comment content={comment} />;
         })}
       </div>
     </article>
