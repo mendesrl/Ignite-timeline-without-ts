@@ -24,7 +24,10 @@ export function Post({ author, publishedAt, content }) {
     addSuffix: true,
   });
 
+  const isNewCommentEmpty = newCommentText.length === 0;
+
   function handleNewCommentChange() {
+    event.target.setCustomValidity("");
     setNewCommentText(event.target.value);
   }
 
@@ -35,13 +38,18 @@ export function Post({ author, publishedAt, content }) {
     setNewCommentText("");
   }
 
-  function deleteComment(commentToDelete) {
-    const commentsWithoutDeletedOne = comments.filter(comment => {
-      return comment !== commentToDelete;
-    })
-
-    setComments(commentsWithoutDeletedOne)
+  function handleNewCommentInvalid() {
+    event.target.setCustomValidity("Por Favor preencha o campo");
   }
+
+  function deleteComment(commentToDelete) {
+    const commentsWithoutDeletedOne = comments.filter((comment) => {
+      return comment !== commentToDelete;
+    });
+
+    setComments(commentsWithoutDeletedOne);
+  }
+
   return (
     <article className={styles.post}>
       <header>
@@ -80,10 +88,14 @@ export function Post({ author, publishedAt, content }) {
           placeholder="Deixe um comentario"
           value={newCommentText}
           onChange={handleNewCommentChange}
+          onInvalid={handleNewCommentInvalid}
+          required
         />
 
         <footer>
-          <button type="submit">Publicar</button>
+          <button type="submit" disabled={isNewCommentEmpty}>
+            Publicar
+          </button>
         </footer>
       </form>
 
