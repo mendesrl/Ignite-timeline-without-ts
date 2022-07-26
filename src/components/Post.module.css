@@ -109,7 +109,7 @@
 }
 
 .commentForm button[type="submit"]:disabled {
-  opacity: .7;
+  opacity: 0.7;
   cursor: not-allowed;
 }
 
